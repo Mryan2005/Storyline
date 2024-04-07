@@ -121,3 +121,92 @@ void readLinkList(linkList *list) {
         printStringList(p->shotContent);
     }
 }
+
+
+void removeNodeThroughID(linkList *list, int lensSerialNumber, int cameraSerialNumber) {
+    node *p, *q;
+    for(p = list->head, q = list->head->next; q != NULL; p = q, q = q->next) {
+        if(q->lensSerialNumber == lensSerialNumber && q->cameraSerialNumber == cameraSerialNumber) {
+            p->next = q->next;
+            free(q);
+            return;
+        }
+    }
+    printf("No such node found.\n");
+}
+
+
+void changeNodeThroughID(linkList *list, int lensSerialNumber, int cameraSerialNumber) {
+    node *p;
+    int command;
+    for(p = list->head->next; p != NULL; p = p->next) {
+        if(p->lensSerialNumber == lensSerialNumber && p->cameraSerialNumber == cameraSerialNumber) {
+            while(1) {
+                printf("which one do you want to change?\n");
+                printf("[0] exit\n[1] lensSerialNumber\n[2] cameraSerialNumber\n[3] shots\n[4] shootAction\n[5] duration\n[6] shotContent\n[7] lines\n[8] effectSound\n[9] music\n[10] transition\n[11] other\n");
+                scanf("%d", &command);
+                getchar();
+                switch(command) {
+                    case 0:
+                        return;
+                    case 1:
+                        printf("Please input the lens serial number: ");
+                        scanf("%d", &p->lensSerialNumber);
+                        break;
+                    case 2:
+                        printf("Please input the camera serial number: ");
+                        scanf("%d", &p->cameraSerialNumber);
+                        break;
+                    case 3:
+                        printf("Please input the shots: ");
+                        stringList *temp = inputString();
+                        p->shots = temp;
+                        break;
+                    case 4:
+                        printf("Please input the shoot action: ");
+                        temp = inputString();
+                        p->shootAction = temp;
+                        break;
+                    case 5:
+                        printf("Please input the duration(int): ");
+                        scanf("%d", &p->duration);
+                        break;
+                    case 6:
+                        printf("Please input the shot content: ");
+                        temp = inputString();
+                        p->shotContent = temp;
+                        break;
+                    case 7:
+                        printf("Please input the lines: ");
+                        temp = inputString();
+                        p->lines = temp;
+                        break;
+                    case 8:
+                        printf("Please input the effect sound: ");
+                        temp = inputString();
+                        p->effectSound = temp;
+                        break;
+                    case 9:
+                        printf("Please input the music: ");
+                        temp = inputString();
+                        p->music = temp;
+                        break;
+                    case 10:
+                        printf("Please input the transition: ");
+                        temp = inputString();
+                        p->transition = temp;
+                        break;
+                    case 11:
+                        printf("Please input the other: ");
+                        temp = inputString();
+                        p->other = temp;
+                        break;
+                    default:
+                        printf("Invalid command.\n");
+                        break;
+                }
+            }
+        }
+    }
+    printf("No such node found.\n");
+}
